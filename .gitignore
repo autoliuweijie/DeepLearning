@@ -87,3 +87,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# osx
+
+.idea/
+.DS_Store/
+.env/*
