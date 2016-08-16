@@ -90,6 +90,6 @@ ENV/
 
 # osx
 
-.idea/
-.DS_Store/
-.env/*
+*.idea/
+*.DS_Store
+*.env/
