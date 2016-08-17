@@ -114,12 +114,8 @@ def relu_backward(dout, cache):
   # TODO: Implement the ReLU backward pass.                                   #
   #############################################################################
 
-  dout_dx = np.zeros_like(x)
-  dout_dx[dout_dx >= 0] = 1
-
-  dx = np.dot(dout_dx, dout)[0]
-
-  print dx
+  dx = np.array(dout, copy=True)
+  dx[x <= 0] = 0
 
   #############################################################################
   #                             END OF YOUR CODE                              #
