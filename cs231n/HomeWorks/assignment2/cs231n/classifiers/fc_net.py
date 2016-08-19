@@ -270,7 +270,31 @@ class FullyConnectedNet(object):
     # self.bn_params[1] to the forward pass for the second batch normalization #
     # layer, etc.                                                              #
     ############################################################################
-    pass
+
+    affine_bn_relu_cache = {}
+    dropout_cache = {}
+    input_x = X
+
+    # layer 1 to self.num_layers - 1
+    for i in range(1, self.num_layers):
+        Wi = 'W' + str(i)
+        bi = 'b' + str(i)
+
+        gammai = 'gamma' + str(i)
+        betai = 'beta' + str(i)
+
+        input_x, affine_bn_relu_cache[i] = affine_bn_relu_forward(input_x, self.params[Wi],
+            self.params[bi], self.params[gammai], self.params[betai], self.bn_params[i - 1])
+
+        if self.use_dropout:
+            input_x, dropout_cache[i] = dropout_forward(input_x, self.dropout_param)
+
+    # last layer
+    Wi = 'W' + str(self.num_layers)
+    bi = 'b' + str(self.num_layers)
+    affine_out, affine_cache = affine_forward(input_x, self.params[Wi], self.params[bi])
+    scores = affine_out
+
     ############################################################################
     #                             END OF YOUR CODE                             #
     ############################################################################
@@ -293,7 +317,13 @@ class FullyConnectedNet(object):
     # automated tests, make sure that your L2 regularization includes a factor #
     # of 0.5 to simplify the expression for the gradient.                      #
     ############################################################################
-    pass
+    
+    loss, dscores = softmax_loss(scores, y)
+
+    # last layer
+
+
+
     ############################################################################
     #                             END OF YOUR CODE                             #
     ############################################################################
