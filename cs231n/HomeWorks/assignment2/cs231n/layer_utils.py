@@ -42,7 +42,7 @@ def affine_bn_relu_forward(x, w, b, gamma, beta, bn_params):
 
   return relu_out, cache
 
-def affine_bn_relu_backward(dout, cache, bn_params):
+def affine_bn_relu_backward(dout, cache):
   """
     backpropagetion of affine <- bn <- relu
   """
