@@ -270,7 +270,38 @@ class FullyConnectedNet(object):
     # self.bn_params[1] to the forward pass for the second batch normalization #
     # layer, etc.                                                              #
     ############################################################################
-    pass
+
+    affine_relu_cache= {}
+    affine_bn_relu_cache = {}
+    dropout_cache = {}
+    input_x = X
+
+    # layer 1 to self.num_layers - 1
+    for i in range(1, self.num_layers):
+        Wi = 'W' + str(i)
+        bi = 'b' + str(i)
+
+        if self.use_batchnorm:
+
+            gammai = 'gamma' + str(i)
+            betai = 'beta' + str(i)
+
+            input_x, affine_bn_relu_cache[i] = affine_bn_relu_forward(input_x, self.params[Wi],
+                self.params[bi], self.params[gammai], self.params[betai], self.bn_params[i - 1])
+
+        else:
+
+            input_x, affine_relu_cache[i] = affine_relu_forward(input_x, self.params[Wi], self.params[bi])
+
+        if self.use_dropout:
+            input_x, dropout_cache[i] = dropout_forward(input_x, self.dropout_param)
+
+    # last layer
+    Wi = 'W' + str(self.num_layers)
+    bi = 'b' + str(self.num_layers)
+    affine_out, affine_cache = affine_forward(input_x, self.params[Wi], self.params[bi])
+    scores = affine_out
+
     ############################################################################
     #                             END OF YOUR CODE                             #
     ############################################################################
@@ -293,7 +324,39 @@ class FullyConnectedNet(object):
     # automated tests, make sure that your L2 regularization includes a factor #
     # of 0.5 to simplify the expression for the gradient.                      #
     ############################################################################
-    pass
+    
+    loss, dscores = softmax_loss(scores, y)
+
+    # last layer
+    dXi, dWi, dbi = affine_backward(dscores, affine_cache)
+
+    grads['W' + str(self.num_layers)] = dWi + self.reg * self.params['W' + str(self.num_layers)]
+    grads['b' + str(self.num_layers)] = dbi
+
+    # other layers
+    for i in range(self.num_layers - 1, 0, -1):
+
+        if self.use_dropout:
+            dXi = dropout_backward(dXi, dropout_cache[i])
+
+        if self.use_batchnorm:
+
+            dXi, dWi, dbi, dgammai, dbetai = affine_bn_relu_backward(dXi, affine_bn_relu_cache[i])
+            grads['W' + str(i)] = dWi + self.reg * self.params['W' + str(i)]
+            grads['b' + str(i)] = dbi
+            grads['gamma' + str(i)] = dgammai
+            grads['beta' + str(i)] = dbetai
+
+        else:
+
+            dXi, dWi, dbi = affine_relu_backward(dXi, affine_relu_cache[i])
+            grads['W' + str(i)] = dWi + self.reg * self.params['W' + str(i)]
+            grads['b' + str(i)] = dbi
+
+    # add loss with regularization
+    for i in range(1, self.num_layers + 1):
+        loss += 0.5 * self.reg * np.sum(self.params['W' + str(i)] * self.params['W' + str(i)])
+
     ############################################################################
     #                             END OF YOUR CODE                             #
     ############################################################################
