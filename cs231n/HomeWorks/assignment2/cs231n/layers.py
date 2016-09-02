@@ -193,6 +193,10 @@ def batchnorm_forward(x, gamma, beta, bn_param):
 
     cache = (x, sample_mean, sample_var, x_normalized, beta, gamma, eps)
 
+    # update running_mean and runing_var 
+    bn_param['running_mean'] = momentum * running_mean + (1 - momentum) * sample_mean
+    bn_param['running_var'] = momentum * running_var + (1 - momentum) * sample_var
+
     #############################################################################
     #                             END OF YOUR CODE                              #
     #############################################################################
@@ -210,17 +214,6 @@ def batchnorm_forward(x, gamma, beta, bn_param):
     #############################################################################
   else:
     raise ValueError('Invalid forward batchnorm mode "%s"' % mode)
-
-  #############################################################################
-  # TODO: update running_mean and runing_var                                  #
-  #############################################################################
-
-  bn_param['running_mean'] = momentum * running_mean + (1 - momentum) * sample_mean
-  bn_param['running_var'] = momentum * running_var + (1 - momentum) * sample_var
-
-  #############################################################################
-  #                             END OF YOUR CODE                              #
-  #############################################################################
 
   return out, cache
 
@@ -332,7 +325,7 @@ def dropout_forward(x, dropout_param):
     # TODO: Implement the training phase forward pass for inverted dropout.   #
     # Store the dropout mask in the mask variable.                            #
     ###########################################################################
-    mask = (np.random.rand(*x.shape)) < (1 - p)
+    mask = (np.random.rand(*x.shape)) < (1-p)
     out = mask * x
     ###########################################################################
     #                            END OF YOUR CODE                             #
@@ -341,7 +334,7 @@ def dropout_forward(x, dropout_param):
     ###########################################################################
     # TODO: Implement the test phase forward pass for inverted dropout.       #
     ###########################################################################
-    out = x
+    out = x * (1-p)
     ###########################################################################
     #                            END OF YOUR CODE                             #
     ###########################################################################
@@ -373,7 +366,7 @@ def dropout_backward(dout, cache):
     #                            END OF YOUR CODE                             #
     ###########################################################################
   elif mode == 'test':
-    dx = dout
+    dx = dout * p
   return dx
 
 
