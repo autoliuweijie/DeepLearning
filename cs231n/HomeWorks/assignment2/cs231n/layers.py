@@ -193,6 +193,10 @@ def batchnorm_forward(x, gamma, beta, bn_param):
 
     cache = (x, sample_mean, sample_var, x_normalized, beta, gamma, eps)
 
+    # update running_mean and runing_var 
+    bn_param['running_mean'] = momentum * running_mean + (1 - momentum) * sample_mean
+    bn_param['running_var'] = momentum * running_var + (1 - momentum) * sample_var
+
     #############################################################################
     #                             END OF YOUR CODE                              #
     #############################################################################
@@ -210,17 +214,6 @@ def batchnorm_forward(x, gamma, beta, bn_param):
     #############################################################################
   else:
     raise ValueError('Invalid forward batchnorm mode "%s"' % mode)
-
-  #############################################################################
-  # TODO: update running_mean and runing_var                                  #
-  #############################################################################
-
-  bn_param['running_mean'] = momentum * running_mean + (1 - momentum) * sample_mean
-  bn_param['running_var'] = momentum * running_var + (1 - momentum) * sample_var
-
-  #############################################################################
-  #                             END OF YOUR CODE                              #
-  #############################################################################
 
   return out, cache
 
