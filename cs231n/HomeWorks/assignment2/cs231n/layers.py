@@ -398,7 +398,56 @@ def conv_forward_naive(x, w, b, conv_param):
   # TODO: Implement the convolutional forward pass.                           #
   # Hint: you can use the function np.pad for padding.                        #
   #############################################################################
-  pass
+
+  def conv(X, w, b, conv_param):
+    """
+      X: shape (C, H, W)
+      W: shape (C, HH, WW)
+      b: float
+    """
+    C, H, W = X.shape
+    C, HH, WW = w.shape
+    pad = conv_param['pad']
+    stride = conv_param['stride']
+
+    # padding
+    npad = ((0, 0), (pad, pad), (pad, pad))
+    X = np.pad(X, pad_width=npad, mode='constant', constant_values=0)
+
+    # conv
+    H_o = 1 + (H + 2 * pad - HH) / stride
+    W_o = 1 + (W + 2 * pad - WW) / stride
+    Y = np.zeros((H_o, W_o))
+    for i in range(H_o):
+      for j in range(W_o):
+
+        y_sum = 0
+        for k in range(HH):
+          for m in range(WW):
+            y_sum += np.sum(X[:, i * stride - pad + k + 1, j * stride - pad + m + 1] * w[:, k, m])
+
+        Y[i, j] = y_sum + b
+
+    return Y
+
+  # get params
+  N, C, H, W = x.shape
+  F, C, HH, WW = w.shape
+
+  # conv for evry image
+  out = []
+  for i in range(N):
+
+    # conv for evey channel
+    channel_list = []
+    for j in range(F):
+      y = conv(x[i], w[j], b[j], conv_param)
+      channel_list.append(y)
+
+    out.append(channel_list)
+
+  out = np.array(out)
+
   #############################################################################
   #                             END OF YOUR CODE                              #
   #############################################################################
