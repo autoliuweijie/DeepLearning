@@ -167,11 +167,12 @@ class Solver(object):
 
     # Perform a parameter update
     for p, w in self.model.params.iteritems():
-      dw = grads[p]
-      config = self.optim_configs[p]
-      next_w, next_config = self.update_rule(w, dw, config)
-      self.model.params[p] = next_w
-      self.optim_configs[p] = next_config
+      if isinstance(w, np.ndarray):
+        dw = grads[p]
+        config = self.optim_configs[p]
+        next_w, next_config = self.update_rule(w, dw, config)
+        self.model.params[p] = next_w
+        self.optim_configs[p] = next_config
 
 
   def check_accuracy(self, X, y, num_samples=None, batch_size=100):
