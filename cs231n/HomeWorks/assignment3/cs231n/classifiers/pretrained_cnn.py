@@ -71,7 +71,7 @@ class PretrainedCNN(object):
     """
 
     # Before loading weights we need to make a dummy forward pass to initialize
-    # the running averages in the bn_pararams
+    # the running averages in the bn_pararams=
     x = np.random.randn(1, 3, self.input_size, self.input_size)
     y = np.random.randint(self.num_classes, size=1)
     loss, grads = self.loss(x, y)
