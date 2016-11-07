@@ -1,4 +1,4 @@
-# CNNs in practice
+# L11: CNNs in practice
 
 
 # 1. Making the most of your data
