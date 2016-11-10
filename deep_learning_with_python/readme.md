@@ -24,7 +24,7 @@ $ virtualenv .env
 Activate virtualenv and install some necessary libraries by pip
 
 ```
-$ activate .env/bin/activate
+$ source .env/bin/activate
 $ pip install -r requirements.txt
 ```
 
