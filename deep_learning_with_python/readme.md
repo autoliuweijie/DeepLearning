@@ -34,15 +34,27 @@ Wait about 20min for libraries installing, and you can deactivate the virtualenv
 $ deactivate
 ```
 
-### 0.3 Start
+### 0.3 Download dataset
+
+cd to dlwp/data_set/, and run the download scrpt
+
+```
+$ cd dlwp/data_set/
+$ ./get_pima_indians_diabetes_data.sh
+``` 
+
+the dataset will be downloaded to this dir
+
+### 0.4 Start
 
 Now, you can open the jupyter notebook by
 
 ```
-$ ./start_ipython_osx.sh
+$ ./start_ipython_osx.sh  # for osx
+$ ./start_ipython_ubuntu.sh  # for ubuntu
 ```
 
-or
+or 
 
 ```
 $ ipython notebook
