@@ -48,4 +48,5 @@ sklearn==0.0
 keras==1.1.1
 theano==0.8.2
 tensorflow==0.11.0rc2
+pandas
 
