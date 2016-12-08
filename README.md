@@ -1,16 +1,23 @@
 DeepLearning
 ===
 
-该项目为深度学习的相关内容
+
+This is some practices about deep learning
+
 
 ## cs231n/
 
-该目录为斯坦福李飞飞的cs231n课程内容
+This directory is about the course in Standford university
 
 《CS231n: Convolutional Neural Networks for Visual Recognition》
 
 
-## deep_learning_with_python
+## deep_learning_with_python/
 
 
- This dir is a learning project of 'Deep Learning with Python'
+This directory is a learning project of the book called 'Deep Learning with Python'
+
+
+## keras_practice/
+
+This is some practices with keras

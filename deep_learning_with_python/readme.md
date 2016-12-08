@@ -7,7 +7,7 @@ Note: This is my learning project according to Jason Brownlee's "Deep Learning w
 
 ### 0.1 Create Virtualenv
 
-cd into the dir of deep_learning_with_python
+cd into the directory of deep_learning_with_python
 
 ```
 $ cd PATH/deep_learning_with_python/
@@ -36,22 +36,21 @@ $ deactivate
 
 ### 0.3 Download dataset
 
-cd to dlwp/data_set/, and run the download scrpt
+cd to dlwp/data_set/, and run the download scrpt, such as:
 
 ```
 $ cd dlwp/data_set/
 $ ./get_pima_indians_diabetes_data.sh
 ``` 
 
-the dataset will be downloaded to this dir
+the dataset will be downloaded to this directory
 
 ### 0.4 Start
 
 Now, you can open the jupyter notebook by
 
 ```
-$ ./start_ipython_osx.sh  # for osx
-$ ./start_ipython_ubuntu.sh  # for ubuntu
+$ ./start_ipython_notebook.sh 
 ```
 
 or 
