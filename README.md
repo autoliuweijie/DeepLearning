@@ -21,3 +21,8 @@ This directory is a learning project of the book called 'Deep Learning with Pyth
 ## keras_practice/
 
 This is some practices with keras
+
+
+## learning_tensorflow/
+
+My practices of learning tensorflow
