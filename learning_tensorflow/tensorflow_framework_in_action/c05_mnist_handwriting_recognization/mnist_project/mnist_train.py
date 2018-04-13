@@ -53,6 +53,10 @@ def train(mnist):
     train_step = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss, global_step=global_step)
     train_op = tf.group(train_step, variable_averages_op)
 
+    # saving graph log
+    log_writer = tf.summary.FileWriter("/Users/liuweijie/Desktop/log", tf.get_default_graph())
+    log_writer.close()
+
     # create saver
     saver = tf.train.Saver()
 
@@ -73,6 +77,7 @@ def train(mnist):
 
                 print("After %d training steps, loss is %g in training batch dataset;" % (step, loss_value))
                 saver.save(sess, os.path.join(MODEL_SAVING_PATH, MODEL_NAME), global_step=global_step)
+
 
 
 def main(argc=None):
