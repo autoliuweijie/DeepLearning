@@ -2,6 +2,6 @@ numpy==1.13.3
 matplotlib==2.1.0
 sklearn==0.0
 scipy==1.0.0
-tensorflow==1.7.0rc0
+tensorflow-gpu==1.8.0
 jupyter==1.0.0
 pandas==0.22.0
