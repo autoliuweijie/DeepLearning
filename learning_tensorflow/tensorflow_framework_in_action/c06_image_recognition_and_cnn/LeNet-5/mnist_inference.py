@@ -107,6 +107,10 @@ def main(argv=None):
     log_writer.close()
 
 
+
+
+
+
 if __name__ == "__main__":
     tf.app.run()
 

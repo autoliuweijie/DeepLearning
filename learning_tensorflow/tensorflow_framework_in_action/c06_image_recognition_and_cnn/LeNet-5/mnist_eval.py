@@ -61,9 +61,12 @@ def evaluate(mnist):
 
 
 def main(argv=None):
+    print("start evaluation!")
     mnist = input_data.read_data_sets(MNIST_DATASET_PATH, one_hot=True)
     evaluate(mnist)
 
 
+
 if __name__ == "__main__":
+
     tf.app.run()
