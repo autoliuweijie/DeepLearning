@@ -14,5 +14,5 @@ saver = tf.train.Saver({"v1": v1, "v2": v2})
 
 with tf.Session() as sess:
 
-    saver.restore(sess, "/Users/liuweijie/Desktop/tensorflow_model.ckpt")
+    saver.restore(sess, "/home/jagger/workspace/tmp/model.ckpt")
     print(sess.run(result))

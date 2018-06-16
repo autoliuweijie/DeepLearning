@@ -17,4 +17,4 @@ saver = tf.train.Saver()
 with tf.Session() as sess:
     sess.run(init_op)
     # save moth tensorflow_model.ckpt.meta and tensorflow_model.ckpt.data
-    saver.save(sess, "/Users/liuweijie/Desktop/tensorflow_model.ckpt")
+    saver.save(sess, "/home/jagger/workspace/tmp/model.ckpt")

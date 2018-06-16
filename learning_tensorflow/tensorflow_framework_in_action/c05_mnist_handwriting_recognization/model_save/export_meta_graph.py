@@ -11,4 +11,4 @@ v2 = tf.get_variable("v2", shape=[1], initializer=tf.random_normal_initializer(m
 result = v1 + v2
 
 saver = tf.train.Saver()
-saver.export_meta_graph("/Users/liuweijie/Desktop/tensorflow_model.ckpt.meta.json", as_text=True)
+saver.export_meta_graph("/home/jagger/workspace/tmp/model.ckpt.meta", as_text=True)

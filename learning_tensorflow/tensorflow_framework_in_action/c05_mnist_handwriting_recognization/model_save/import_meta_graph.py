@@ -7,11 +7,11 @@
 import tensorflow as tf
 
 # importing graph
-saver = tf.train.import_meta_graph("/Users/liuweijie/Desktop/tensorflow_model.ckpt.meta.json")
+saver = tf.train.import_meta_graph("/home/jagger/workspace/tmp/model.ckpt.meta")
 
 with tf.Session() as sess:
 
     # loading variable value to sess
-    saver.restore(sess, "/Users/liuweijie/Desktop/tensorflow_model.ckpt")
+    saver.restore(sess, "/home/jagger/workspace/tmp/model.ckpt")
     result = tf.get_default_graph().get_tensor_by_name("add:0")
     print(sess.run(result))
