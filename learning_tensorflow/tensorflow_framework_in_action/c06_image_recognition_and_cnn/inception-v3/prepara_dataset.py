@@ -17,6 +17,7 @@
 import os
 import numpy as np
 import cv2
+import tensorflow as tf
 
 
 
@@ -63,7 +64,7 @@ def create_image_lists(testing_percentage, validation_percentage):
                 continue
 
             image_path = os.path.join(flower_path, image)
-            image_np = cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2RGB)
+            image_np = cv2.cvtColor(cv2.imread(image_path, cv2.IMREAD_COLOR), cv2.COLOR_BGR2RGB)
             image_np = cv2.resize(image_np, OUT_IMAGE_SIZE).astype(np.float32)
 
             # Assign this image into training, testing or validation dataset randomly.

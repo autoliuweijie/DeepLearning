@@ -6,6 +6,25 @@
     @ref: <Tensorflow: 实战Google深度学习框架> Chapter 6.
           https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/slim/python/slim/nets/inception_v3.py
     @tensorflow-1.8.0
+    
+    @print in terminal:
+        ...
+        Start training inception-v3.
+        [2018-06-17 00:35:45] Step 0: Validation accuracy = 20.102%
+        It is the best model until now, and will be saved!
+        [2018-06-17 00:38:51] Step 50: Validation accuracy = 29.771%
+        It is the best model until now, and will be saved!
+        [2018-06-17 00:42:17] Step 100: Validation accuracy = 45.547%
+        It is the best model until now, and will be saved!
+        [2018-06-17 00:45:44] Step 150: Validation accuracy = 55.725%
+        It is the best model until now, and will be saved!
+        [2018-06-17 00:49:12] Step 200: Validation accuracy = 56.489%
+        It is the best model until now, and will be saved!
+        [2018-06-17 00:52:46] Step 250: Validation accuracy = 61.832%
+        It is the best model until now, and will be saved!
+        [2018-06-17 00:56:11] Step 299: Validation accuracy = 58.270%
+        End training.
+        Final test accuracy = 63.764% (from the model at 250 step(s)).
 """
 import numpy as np
 import tensorflow as tf
@@ -16,8 +35,8 @@ import time
 
 # Configuration
 INPUT_DATA = "/home/jagger/workspace/tmp/flower_processed_data.npy"
-CKPT_FILE = "/home/jagger/tmp/inception_v3.ckpt"
-LOG_DIR = "/home/jagger/tmp/log/"
+CKPT_FILE = "/home/jagger/workspace/tmp/inception_v3.ckpt"  # The output ckpt file path
+LOG_DIR = "/home/jagger/workspace/tmp/log/"
 MAX_TO_KEEP = 5  # the maximum number models to be saved in disk.
 LEARNING_RATE = 0.0001
 TRAINING_STEPS = 300
@@ -135,14 +154,14 @@ def train_save_and_test_model():
                     labels_true: validation_labels,
                 })
                 now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-                print("[%s] Step %d: Validation accuracy = %.3f%%" % (now_time, i, validation_accuacy*100))
+                print("[%s] Step %d/%d: Validation accuracy = %.3f%%" % (now_time, i, TRAINING_STEPS, validation_accuacy * 100))
 
                 if validation_accuacy >= best_accuracy:
                     best_accuracy = validation_accuacy
                     best_step = i
-                    print("It is the best model until now, and will be saved!")
-                    saver.save(sess, CKPT_FILE, global_step=best_step)
-        print("End training.")
+                    saved_model_path = saver.save(sess, CKPT_FILE, global_step=best_step)
+                    print("It is the best model until now, and saved at %s." % (saved_model_path))
+        print("End training, and start testing on the testing dataset.")
 
         # Finally, testing the best model on the tesing datset
         saver.restore(sess, CKPT_FILE + '-%d' % (best_step))
@@ -153,8 +172,13 @@ def train_save_and_test_model():
         print("Final test accuracy = %.3f%% (from the best model at %d step(s))." % (validation_accuacy*100, best_step))
 
 
-if __name__ == "__main__":
+def main(argv=None):
     train_save_and_test_model()
+
+if __name__ == "__main__":
+    tf.app.run()
+
+
 
 
 
